@@ -1,42 +1,73 @@
+// XARVIONEX - MEXA Core Script v2.1 (Fix Mobile Menu)
+
 document.addEventListener('DOMContentLoaded', () => {
-    // Mobile Menu Elements
+    console.log("XARVIONEX SYSTEM: UI LOADED");
+
+    // --- ELEMENT SELECTORS ---
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const closeMenuBtn = document.getElementById('close-menu-btn');
     const sidebar = document.getElementById('sidebar');
     const mobileOverlay = document.getElementById('mobile-overlay');
 
-    // Fungsi Buka/Tutup Menu
-    function toggleMenu() {
+    // --- FUNCTIONS ---
+
+    function openMenu() {
         if (!sidebar || !mobileOverlay) return;
+        
+        // 1. Munculkan Overlay dulu (masih transparan)
+        mobileOverlay.classList.remove('hidden');
+        
+        // 2. Beri jeda dikit biar browser sadar, lalu bikin gelap (fade in)
+        setTimeout(() => {
+            mobileOverlay.classList.remove('opacity-0');
+        }, 10);
 
-        const isHidden = sidebar.classList.contains('-translate-x-full');
-
-        if (isHidden) {
-            // BUKA MENU
-            sidebar.classList.remove('-translate-x-full'); // Geser sidebar masuk
-            mobileOverlay.classList.remove('hidden'); // Munculkan wadah overlay
-            // Beri sedikit delay agar transisi opacity jalan
-            setTimeout(() => {
-                mobileOverlay.classList.remove('opacity-0');
-            }, 10);
-        } else {
-            // TUTUP MENU
-            sidebar.classList.add('-translate-x-full'); // Geser sidebar keluar
-            mobileOverlay.classList.add('opacity-0'); // Hilangkan hitamnya
-            
-            // Tunggu animasi selesai baru sembunyikan wadahnya
-            setTimeout(() => {
-                mobileOverlay.classList.add('hidden');
-            }, 300);
-        }
+        // 3. Geser Sidebar Masuk (Hapus translate-x-full)
+        sidebar.classList.remove('translate-x-full');
     }
 
-    // Event Listeners
-    if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', toggleMenu);
-    if (closeMenuBtn) closeMenuBtn.addEventListener('click', toggleMenu);
-    if (mobileOverlay) mobileOverlay.addEventListener('click', toggleMenu); // Klik area hitam untuk tutup
+    function closeMenu() {
+        if (!sidebar || !mobileOverlay) return;
 
-    // Fungsi Copy Code
+        // 1. Geser Sidebar Keluar (Kembalikan ke translate-x-full)
+        sidebar.classList.add('translate-x-full');
+
+        // 2. Bikin Overlay Transparan (fade out)
+        mobileOverlay.classList.add('opacity-0');
+
+        // 3. Tunggu animasi selesai (300ms), baru sembunyikan overlay sepenuhnya
+        setTimeout(() => {
+            mobileOverlay.classList.add('hidden');
+        }, 300);
+    }
+
+    // --- EVENT LISTENERS ---
+    
+    // Buka menu saat tombol burger diklik
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openMenu();
+        });
+    }
+
+    // Tutup menu saat tombol X diklik
+    if (closeMenuBtn) {
+        closeMenuBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            closeMenu();
+        });
+    }
+
+    // Tutup menu saat area hitam diklik
+    if (mobileOverlay) {
+        mobileOverlay.addEventListener('click', (e) => {
+            e.preventDefault();
+            closeMenu();
+        });
+    }
+
+    // --- COPY CODE FEATURE (Utility) ---
     window.copyCode = function(btn) {
         const codeElement = btn.parentElement.nextElementSibling;
         if (!codeElement) return;
