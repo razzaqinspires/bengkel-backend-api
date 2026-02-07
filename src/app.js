@@ -22,9 +22,9 @@ app.use(helmet());
 
 // 2. CORS: Izinkan Frontend mengakses API
 app.use(cors({
-  origin: '*', // Di production, ganti '*' dengan domain frontend temanmu
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  origin: '*', // Izinkan semua akses (termasuk GitHub Pages & Localhost)
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
 
 // 3. Parser: Agar bisa baca JSON dan Form Data
