@@ -3,87 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Authentication | MEXA API</title>
+    <title>Auth | MEXA API</title>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: { 'xar-green': '#00ff88', 'xar-blue': '#00b8ff', 'xar-dark': '#050505' }
+                    colors: {
+                        'xar-dark': 'var(--xar-bg-deep)',
+                        'xar-panel': 'var(--xar-bg-panel)',
+                        'xar-primary': 'var(--xar-primary)',
+                        'xar-accent': 'var(--xar-accent)',
+                        'xar-alert': 'var(--xar-alert)'
+                    }
                 }
             }
         }
     </script>
 </head>
-<body class="bg-xar-dark text-gray-300 antialiased overflow-x-hidden">
+<body class="bg-xar-dark text-gray-300 antialiased overflow-x-hidden flex flex-col min-h-screen">
 
-    <header class="md:hidden fixed top-0 w-full z-40 glass-panel border-b border-white/5 flex justify-between items-center px-6 py-4 bg-xar-dark/90 backdrop-blur-md">
+    <header class="md:hidden fixed top-0 w-full z-[40] glass-panel border-b border-white/5 flex justify-between items-center px-6 py-4 bg-xar-dark/90 backdrop-blur-xl">
         <div class="flex items-center gap-3">
-            <a href="documentation.html" class="text-gray-400 hover:text-white transition"><i class="fa-solid fa-arrow-left"></i></a>
-            <span class="font-bold text-white tracking-wider">AUTH</span>
+            <a href="documentation.html" class="text-gray-400 hover:text-white transition-colors">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-shield-halved text-xar-primary text-xs"></i>
+                <span class="font-bold text-white tracking-wider text-sm">AUTH</span>
+            </div>
         </div>
-        <button id="mobile-menu-btn" class="text-white focus:outline-none p-2 active:scale-95 transition">
+        <button id="mobile-menu-btn" class="text-white focus:outline-none p-2 active:scale-95 transition-transform">
             <i class="fa-solid fa-bars text-xl"></i>
         </button>
     </header>
 
-    <div id="mobile-overlay" class="fixed inset-0 bg-black/90 z-50 hidden opacity-0 transition-opacity duration-300 md:hidden backdrop-blur-sm"></div>
+    <div id="mobile-overlay" class="fixed inset-0 bg-black/90 z-[50] hidden opacity-0 transition-opacity duration-300 md:hidden backdrop-blur-sm"></div>
 
-    <div class="flex h-screen pt-16 md:pt-0">
+    <div class="flex flex-1 pt-16 md:pt-0">
         
-        <aside id="sidebar" class="
-            fixed inset-y-0 right-0 w-[280px] z-[60] transform translate-x-full transition-transform duration-300 shadow-2xl
-            md:translate-x-0 md:relative md:inset-auto md:w-72 md:block md:border-r
-            bg-[#0a0a0a] border-l md:border-l-0 border-white/10 glass-panel flex flex-col h-full
-        ">
-            <div class="p-4 flex justify-between items-center border-b border-white/5 md:hidden bg-[#0f0f0f]">
-                <span class="text-white font-bold tracking-widest uppercase text-sm">Menu</span>
-                <button id="close-menu-btn" class="text-gray-400 hover:text-red-500 transition p-2">
-                    <i class="fa-solid fa-xmark text-2xl"></i>
-                </button>
+        <aside id="sidebar" class="fixed inset-y-0 right-0 w-[280px] z-[60] transform translate-x-full transition-transform duration-300 md:translate-x-0 md:relative md:inset-auto md:w-72 md:block md:border-r bg-xar-panel border-l md:border-l-0 border-white/10 glass-panel flex flex-col h-full shadow-2xl">
+            
+            <div class="p-6 flex justify-between items-center border-b border-white/5 md:hidden bg-white/5">
+                <span class="text-white font-bold tracking-widest uppercase text-sm">Navigasi</span>
+                <button id="close-menu-btn" class="text-gray-400 hover:text-red-500 transition p-2"><i class="fa-solid fa-xmark text-2xl"></i></button>
             </div>
 
-            <div class="p-8 border-b border-white/5 hidden md:block">
-                <a href="index.html" class="flex items-center gap-2 mb-4 text-xs text-gray-500 hover:text-xar-green transition">
-                    <i class="fa-solid fa-arrow-left"></i> Home
+            <div class="p-8 hidden md:block border-b border-white/5">
+                <a href="index.html" class="flex items-center gap-2 mb-6 text-xs text-gray-500 hover:text-xar-primary transition-colors group">
+                    <i class="fa-solid fa-arrow-left group-hover:-translate-x-1 transition-transform"></i> Kembali ke Beranda
                 </a>
                 <h1 class="text-xl font-bold tracking-tighter text-white">
-                    MEXA <span class="text-xar-green">DOCS</span>
+                    MEXA <span class="text-xar-primary">CONSOLE</span>
                 </h1>
+                <p class="text-[10px] text-gray-500 mt-2 font-mono uppercase tracking-widest">Security Module</p>
             </div>
             
-            <nav class="flex-1 py-6 space-y-1 overflow-y-auto">
-                 <a href="index.html" class="md:hidden block px-6 py-3 text-sm text-gray-300 hover:text-white border-b border-white/5 mb-2">
-                    <i class="fa-solid fa-home mr-2"></i> Beranda
-                </a>
-                <a href="documentation.html" class="nav-link block px-6 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 border-l-2 border-transparent transition">Overview</a>
-                <a href="auth.html" class="nav-link active block px-6 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 border-l-2 border-xar-green bg-white/5 transition">Authentication</a>
-                <a href="api-reference.html" class="nav-link block px-6 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 border-l-2 border-transparent transition">Endpoints</a>
-                <a href="support.html" class="nav-link block px-6 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 border-l-2 border-transparent transition">Support</a>
+            <nav class="flex-1 py-6 space-y-1 overflow-y-auto px-2 custom-scrollbar">
+                <p class="px-4 text-[10px] font-bold text-gray-600 uppercase tracking-widest mb-3 md:block hidden">System Modules</p>
+                <a href="index.html" class="md:hidden flex items-center gap-3 px-4 py-3 text-sm text-gray-300 hover:text-white border-b border-white/5 mb-2 transition-colors"><i class="fa-solid fa-home w-5 text-center opacity-50"></i> Beranda</a>
+                
+                <a href="documentation.html" class="nav-link flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg mb-1 group"><i class="fa-solid fa-layer-group w-5 text-center opacity-70 group-hover:opacity-100"></i> Overview</a>
+                <a href="auth.html" class="nav-link active flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg mb-1 group"><i class="fa-solid fa-shield-halved w-5 text-center opacity-70 group-hover:opacity-100"></i> Authentication</a>
+                <a href="api-reference.html" class="nav-link flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg mb-1 group"><i class="fa-solid fa-server w-5 text-center opacity-70 group-hover:opacity-100"></i> API Endpoints</a>
+                <a href="support.html" class="nav-link flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg mb-1 group"><i class="fa-solid fa-headset w-5 text-center opacity-70 group-hover:opacity-100"></i> Support Center</a>
+                
+                <div class="px-2 pt-4 border-t border-white/5 mt-2">
+                    <a href="demo.html" class="flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-xar-primary/10 to-transparent border border-xar-primary/20 text-xar-primary font-bold rounded-lg hover:bg-xar-primary hover:text-black transition-all duration-300 group">
+                        <i class="fa-solid fa-mobile-screen group-hover:animate-bounce"></i> Live Demo
+                    </a>
+                </div>
             </nav>
+
+            <div class="p-6 border-t border-white/5 bg-black/20 backdrop-blur-sm">
+                <div class="flex items-center gap-3">
+                    <div id="status-dot" class="w-2 h-2 rounded-full bg-gray-600"></div>
+                    <div class="flex flex-col">
+                        <span class="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Server Status</span>
+                        <span id="status-text" class="text-xs text-gray-400 font-mono">Connecting...</span>
+                    </div>
+                </div>
+            </div>
         </aside>
 
-        <main class="flex-1 overflow-y-auto relative w-full bg-xar-dark">
-            <div class="max-w-4xl mx-auto px-6 md:px-10 py-10">
-                <h1 class="text-3xl font-bold text-white mb-6">Autentikasi & Keamanan</h1>
-                <p class="text-gray-400 mb-8 border-l-4 border-xar-green pl-4">Panduan mendapatkan akses token JWT untuk berinteraksi dengan API MEXA.</p>
+        <main class="flex-1 overflow-y-auto relative w-full bg-xar-dark custom-scrollbar">
+            <div class="fixed top-20 right-[-10%] w-[600px] h-[600px] bg-gradient-to-b from-xar-primary/5 to-transparent rounded-full blur-[100px] pointer-events-none"></div>
 
-                <div class="glass-panel rounded-xl overflow-hidden mb-8 border border-white/10">
-                    <div class="p-4 border-b border-white/5 flex justify-between items-center bg-white/5">
-                        <div class="flex items-center gap-3">
-                            <span class="bg-green-500/20 text-green-400 px-2 py-1 text-xs font-bold rounded">POST</span>
+            <div class="max-w-5xl mx-auto px-6 md:px-12 py-12 md:py-20 relative z-10">
+                
+                <div class="mb-12">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="px-3 py-1 rounded bg-xar-primary/10 border border-xar-primary/20 text-xar-primary text-xs font-mono">SECURE LAYER</div>
+                    </div>
+                    <h1 class="text-4xl font-bold text-white mb-6">Autentikasi Sistem</h1>
+                    <p class="text-lg text-gray-400 leading-relaxed border-l-4 border-xar-primary pl-6">
+                        Setiap request ke endpoint privat membutuhkan <strong class="text-white">Bearer Token (JWT)</strong> pada Header Authorization. 
+                        Token ini didapatkan setelah login berhasil.
+                    </p>
+                </div>
+
+                <div class="glass-panel p-6 rounded-xl border border-yellow-500/20 bg-yellow-500/5 mb-12 flex items-start gap-4">
+                    <i class="fa-solid fa-triangle-exclamation text-yellow-500 mt-1"></i>
+                    <div>
+                        <h4 class="text-yellow-500 font-bold text-sm mb-1">Security Best Practice</h4>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Jangan pernah menyimpan Access Token di LocalStorage browser jika memungkinkan. Gunakan <code>HttpOnly Cookie</code> atau <code>Secure Storage</code> pada perangkat mobile untuk mencegah serangan XSS.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="glass-panel rounded-xl overflow-hidden mb-12 border border-white/10 group hover:border-xar-primary/30 transition-colors">
+                    <div class="p-4 border-b border-white/5 flex items-center justify-between bg-black/20">
+                        <div class="flex items-center gap-4">
+                            <span class="bg-xar-primary/20 text-xar-primary px-3 py-1 text-xs font-bold rounded font-mono border border-xar-primary/20">POST</span>
                             <span class="font-mono text-sm text-gray-300">/auth/login</span>
                         </div>
+                        <div class="text-[10px] text-gray-500 font-mono">PUBLIC ACCESS</div>
                     </div>
-                    <div class="p-6">
-                        <p class="text-sm text-gray-400 mb-4">Gunakan endpoint ini untuk menukar kredensial menjadi Access Token.</p>
+                    
+                    <div class="p-8">
+                        <p class="text-sm text-gray-400 mb-6">Menukarkan kredensial (email & password) untuk mendapatkan Access Token & Refresh Token.</p>
+                        
+                        <div class="mb-6">
+                            <h4 class="text-xs font-bold text-gray-500 uppercase mb-3">Body Parameters</h4>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-sm text-gray-400">
+                                    <thead class="text-xs text-gray-500 uppercase border-b border-white/5">
+                                        <tr><th class="py-2">Field</th><th class="py-2">Type</th><th class="py-2">Required</th><th class="py-2">Description</th></tr>
+                                    </thead>
+                                    <tbody class="font-mono text-xs">
+                                        <tr class="border-b border-white/5"><td class="py-3 text-xar-primary">email</td><td>string</td><td>Yes</td><td>Email terdaftar</td></tr>
+                                        <tr><td class="py-3 text-xar-primary">password</td><td>string</td><td>Yes</td><td>Password user</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
                         <div class="relative group">
-                            <button onclick="copyCode(this)" class="absolute top-2 right-2 text-xs text-gray-500 hover:text-white"><i class="fa-regular fa-copy"></i> Copy</button>
-                            <pre class="bg-[#0f0f0f] p-4 rounded text-sm text-blue-300 overflow-x-auto border border-white/5">
-curl -X POST https://api-mexa.xarvionex.com/v1/auth/login \
+                            <button onclick="copyCode(this)" class="absolute top-3 right-3 text-[10px] text-gray-500 hover:text-white bg-black/50 px-2 py-1 rounded border border-white/10 transition-colors flex items-center gap-2">
+                                <i class="fa-regular fa-copy"></i> Copy cURL
+                            </button>
+                            <pre class="bg-[#050505] p-6 rounded-lg text-xs md:text-sm text-xar-accent overflow-x-auto border border-white/5 font-mono shadow-inner">
+curl -X POST https://bengkel-backend-api.vercel.app/api/v1/auth/login \
 -H "Content-Type: application/json" \
 -d '{
   "email": "user@example.com",
@@ -93,34 +158,96 @@ curl -X POST https://api-mexa.xarvionex.com/v1/auth/login \
                     </div>
                 </div>
 
-                <div class="glass-panel rounded-xl overflow-hidden mb-8 border border-white/10">
-                    <div class="p-4 border-b border-white/5 flex justify-between items-center bg-white/5">
-                        <div class="flex items-center gap-3">
-                            <span class="bg-blue-500/20 text-blue-400 px-2 py-1 text-xs font-bold rounded">POST</span>
+                <div class="glass-panel rounded-xl overflow-hidden mb-12 border border-white/10 group hover:border-xar-accent/30 transition-colors">
+                    <div class="p-4 border-b border-white/5 flex items-center justify-between bg-black/20">
+                        <div class="flex items-center gap-4">
+                            <span class="bg-xar-accent/20 text-xar-accent px-3 py-1 text-xs font-bold rounded font-mono border border-xar-accent/20">POST</span>
                             <span class="font-mono text-sm text-gray-300">/auth/register</span>
                         </div>
+                        <div class="text-[10px] text-gray-500 font-mono">PUBLIC ACCESS</div>
                     </div>
-                    <div class="p-6">
-                        <p class="text-sm text-gray-400 mb-4">Mendaftarkan pengguna baru (User atau Partner).</p>
+                    
+                    <div class="p-8">
+                        <p class="text-sm text-gray-400 mb-6">Mendaftarkan pengguna baru sebagai User (Pemilik Kendaraan) atau Partner (Mitra Bengkel).</p>
+
+                         <div class="mb-6">
+                            <h4 class="text-xs font-bold text-gray-500 uppercase mb-3">Body Parameters</h4>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-sm text-gray-400">
+                                    <thead class="text-xs text-gray-500 uppercase border-b border-white/5">
+                                        <tr><th class="py-2">Field</th><th class="py-2">Type</th><th class="py-2">Required</th><th class="py-2">Description</th></tr>
+                                    </thead>
+                                    <tbody class="font-mono text-xs">
+                                        <tr class="border-b border-white/5"><td class="py-3 text-xar-primary">name</td><td>string</td><td>Yes</td><td>Nama Lengkap</td></tr>
+                                        <tr class="border-b border-white/5"><td class="py-3 text-xar-primary">email</td><td>string</td><td>Yes</td><td>Email Unik</td></tr>
+                                        <tr class="border-b border-white/5"><td class="py-3 text-xar-primary">password</td><td>string</td><td>Yes</td><td>Min 8 karakter</td></tr>
+                                        <tr class="border-b border-white/5"><td class="py-3 text-xar-primary">role</td><td>string</td><td>Yes</td><td>'USER' | 'PARTNER'</td></tr>
+                                        <tr><td class="py-3 text-xar-primary">phone</td><td>string</td><td>Yes</td><td>Nomor HP Aktif</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
                         <div class="relative group">
-                            <button onclick="copyCode(this)" class="absolute top-2 right-2 text-xs text-gray-500 hover:text-white"><i class="fa-regular fa-copy"></i> Copy</button>
-                            <pre class="bg-[#0f0f0f] p-4 rounded text-sm text-blue-300 overflow-x-auto border border-white/5">
-curl -X POST https://api-mexa.xarvionex.com/v1/auth/register \
+                            <button onclick="copyCode(this)" class="absolute top-3 right-3 text-[10px] text-gray-500 hover:text-white bg-black/50 px-2 py-1 rounded border border-white/10 transition-colors flex items-center gap-2">
+                                <i class="fa-regular fa-copy"></i> Copy cURL
+                            </button>
+                            <pre class="bg-[#050505] p-6 rounded-lg text-xs md:text-sm text-xar-accent overflow-x-auto border border-white/5 font-mono shadow-inner">
+curl -X POST https://bengkel-backend-api.vercel.app/api/v1/auth/register \
 -H "Content-Type: application/json" \
 -d '{
-  "name": "Budi Santoso",
-  "email": "budi@example.com",
-  "password": "securePass123",
-  "role": "USER",
-  "phone": "08123456789"
+  "name": "Arifi Razzaq",
+  "email": "arifi@example.com",
+  "password": "SecurePassword123!",
+  "role": "PARTNER",
+  "phone": "081299998888"
 }'</pre>
                         </div>
                     </div>
                 </div>
 
+                <footer class="mt-20 pt-8 border-t border-white/5 text-center text-xs text-gray-600 font-mono">
+                    <p>&copy; <span class="current-year">2026</span> XARVIONEX Corp. | MEXA Security Module</p>
+                </footer>
             </div>
         </main>
     </div>
+
+    <footer class="bg-black py-16 border-t border-white/5 text-center md:text-left z-10 relative mt-auto">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div class="col-span-1 md:col-span-2">
+                <div class="flex items-center gap-2 mb-6 justify-center md:justify-start">
+                    <div class="w-8 h-8 rounded bg-xar-primary flex items-center justify-center text-black font-bold">X</div>
+                    <h2 class="text-2xl font-bold text-white tracking-wider">XARVIONEX</h2>
+                </div>
+                <p class="text-gray-500 text-sm max-w-sm mx-auto md:mx-0 leading-relaxed">
+                    Menciptakan masa depan layanan digital melalui integrasi kecerdasan buatan dan infrastruktur fisik yang presisi.
+                </p>
+            </div>
+            
+            <div>
+                <h4 class="text-white font-bold mb-6 tracking-widest text-xs uppercase border-b border-white/10 pb-2 inline-block">Developer</h4>
+                <ul class="space-y-4 text-sm text-gray-500">
+                    <li><a href="documentation.html" class="hover:text-xar-primary transition-colors flex items-center gap-2 justify-center md:justify-start"><i class="fa-solid fa-book opacity-50"></i> Dokumentasi API</a></li>
+                    <li><a href="https://github.com/razzaqinspires/bengkel-backend-api" target="_blank" class="hover:text-xar-primary transition-colors flex items-center gap-2 justify-center md:justify-start"><i class="fa-brands fa-github opacity-50"></i> GitHub Repository</a></li>
+                    <li><a href="https://bengkel-backend-api.vercel.app/" target="_blank" class="hover:text-xar-primary transition-colors flex items-center gap-2 justify-center md:justify-start"><i class="fa-solid fa-server opacity-50"></i> Status Server</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="text-white font-bold mb-6 tracking-widest text-xs uppercase border-b border-white/10 pb-2 inline-block">Connect</h4>
+                <ul class="space-y-4 text-sm text-gray-500">
+                    <li><a href="mailto:xarvionex@gmail.com" class="hover:text-xar-primary transition-colors flex items-center gap-2 justify-center md:justify-start"><i class="fa-solid fa-envelope opacity-50"></i> xarvionex@gmail.com</a></li>
+                    <li><a href="https://www.instagram.com/xarvionex?igsh=MWg2ZDJ1Y215b2ZuOA==" target="_blank" class="hover:text-xar-primary transition-colors flex items-center gap-2 justify-center md:justify-start"><i class="fa-brands fa-instagram opacity-50"></i> Instagram</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="mt-16 pt-8 border-t border-white/5 text-center text-xs text-gray-600 font-mono">
+            &copy; <span class="current-year">2026</span> XARVIONEX Corp. All Rights Reserved. <span class="mx-2">|</span> MEXA System V4.0
+        </div>
+    </footer>
+
     <script src="js/main.js"></script>
 </body>
 </html>

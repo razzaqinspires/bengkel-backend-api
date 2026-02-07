@@ -3,140 +3,234 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Developer Console | MEXA API</title>
+    <title>Console | MEXA API</title>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'xar-green': '#00ff88',
-                        'xar-blue': '#00b8ff',
-                        'xar-dark': '#050505',
-                        'xar-panel': '#0a0a0a'
+                        'xar-dark': 'var(--xar-bg-deep)',
+                        'xar-panel': 'var(--xar-bg-panel)',
+                        'xar-primary': 'var(--xar-primary)',
+                        'xar-accent': 'var(--xar-accent)',
+                        'xar-alert': 'var(--xar-alert)'
                     }
                 }
             }
         }
     </script>
 </head>
-<body class="bg-xar-dark text-gray-300 antialiased overflow-x-hidden">
+<body class="bg-xar-dark text-gray-300 antialiased overflow-x-hidden flex flex-col min-h-screen">
 
-    <header class="md:hidden fixed top-0 w-full z-40 glass-panel border-b border-white/5 flex justify-between items-center px-6 py-4 bg-xar-dark/90 backdrop-blur-md">
+    <header class="md:hidden fixed top-0 w-full z-[40] glass-panel border-b border-white/5 flex justify-between items-center px-6 py-4 bg-xar-dark/90 backdrop-blur-xl">
         <div class="flex items-center gap-3">
-            <a href="index.html" class="text-gray-400 hover:text-white transition"><i class="fa-solid fa-arrow-left"></i></a>
-            <span class="font-bold text-white tracking-wider">DEV CONSOLE</span>
+            <a href="index.html" class="text-gray-400 hover:text-white transition-colors">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-terminal text-xar-primary text-xs"></i>
+                <span class="font-bold text-white tracking-wider text-sm">CONSOLE</span>
+            </div>
         </div>
-        <button id="mobile-menu-btn" class="text-white focus:outline-none p-2 active:scale-95 transition">
+        <button id="mobile-menu-btn" class="text-white focus:outline-none p-2 active:scale-95 transition-transform">
             <i class="fa-solid fa-bars text-xl"></i>
         </button>
     </header>
 
-    <div id="mobile-overlay" class="fixed inset-0 bg-black/90 z-50 hidden opacity-0 transition-opacity duration-300 md:hidden backdrop-blur-sm"></div>
+    <div id="mobile-overlay" class="fixed inset-0 bg-black/90 z-[50] hidden opacity-0 transition-opacity duration-300 md:hidden backdrop-blur-sm"></div>
 
-    <div class="flex h-screen pt-16 md:pt-0">
+    <div class="flex flex-1 pt-16 md:pt-0">
         
-        <aside id="sidebar" class="
-            fixed inset-y-0 right-0 w-[280px] z-[60] transform translate-x-full transition-transform duration-300 shadow-2xl
-            md:translate-x-0 md:relative md:inset-auto md:w-72 md:block md:border-r
-            bg-[#0a0a0a] border-l md:border-l-0 border-white/10 glass-panel flex flex-col h-full
-        ">
+        <aside id="sidebar" class="fixed inset-y-0 right-0 w-[280px] z-[60] transform translate-x-full transition-transform duration-300 md:translate-x-0 md:relative md:inset-auto md:w-72 md:block md:border-r bg-xar-panel border-l md:border-l-0 border-white/10 glass-panel flex flex-col h-full shadow-2xl">
             
-            <div class="p-4 flex justify-between items-center border-b border-white/5 md:hidden bg-[#0f0f0f]">
-                <span class="text-white font-bold tracking-widest uppercase text-sm">Menu</span>
+            <div class="p-6 flex justify-between items-center border-b border-white/5 md:hidden bg-white/5">
+                <span class="text-white font-bold tracking-widest uppercase text-sm">Navigasi</span>
                 <button id="close-menu-btn" class="text-gray-400 hover:text-red-500 transition p-2">
                     <i class="fa-solid fa-xmark text-2xl"></i>
                 </button>
             </div>
 
-            <div class="p-8 border-b border-white/5 hidden md:block">
-                <a href="index.html" class="flex items-center gap-2 mb-4 text-xs text-gray-500 hover:text-xar-green transition">
-                    <i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda
+            <div class="p-8 hidden md:block border-b border-white/5">
+                <a href="index.html" class="flex items-center gap-2 mb-6 text-xs text-gray-500 hover:text-xar-primary transition-colors group">
+                    <i class="fa-solid fa-arrow-left group-hover:-translate-x-1 transition-transform"></i> Kembali ke Beranda
                 </a>
                 <h1 class="text-xl font-bold tracking-tighter text-white">
-                    API <span class="text-xar-green">REFERENCE</span>
+                    MEXA <span class="text-xar-primary">CONSOLE</span>
                 </h1>
-                <p class="text-xs text-gray-500 mt-2">Versi 1.0.0 (Stable)</p>
+                <p class="text-[10px] text-gray-500 mt-2 font-mono uppercase tracking-widest">Dev Environment v4.0</p>
             </div>
             
-            <nav class="flex-1 py-6 space-y-1 overflow-y-auto custom-scrollbar">
-                <p class="px-6 text-xs font-bold text-gray-600 uppercase tracking-widest mb-3 md:block hidden">Core Modules</p>
+            <nav class="flex-1 py-6 space-y-1 overflow-y-auto px-2 custom-scrollbar">
+                <p class="px-4 text-[10px] font-bold text-gray-600 uppercase tracking-widest mb-3 md:block hidden">System Modules</p>
                 
-                <a href="index.html" class="md:hidden block px-6 py-3 text-sm text-gray-300 hover:text-white border-b border-white/5 mb-2">
-                    <i class="fa-solid fa-home mr-2"></i> Beranda
+                <a href="index.html" class="md:hidden flex items-center gap-3 px-4 py-3 text-sm text-gray-300 hover:text-white border-b border-white/5 mb-2 transition-colors">
+                    <i class="fa-solid fa-home w-5 text-center opacity-50"></i> Beranda
                 </a>
 
-                <a href="documentation.html" class="nav-link active block px-6 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 border-l-2 border-xar-green bg-white/5 transition">Overview</a>
-                <a href="auth.html" class="nav-link block px-6 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 border-l-2 border-transparent transition">Authentication</a>
-                <a href="api-reference.html" class="nav-link block px-6 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 border-l-2 border-transparent transition">Endpoints</a>
-                <a href="support.html" class="nav-link block px-6 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 border-l-2 border-transparent transition">Support</a>
+                <a href="documentation.html" class="nav-link active flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg mb-1 group">
+                    <i class="fa-solid fa-layer-group w-5 text-center opacity-70 group-hover:opacity-100"></i> Overview
+                </a>
+                <a href="auth.html" class="nav-link flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg mb-1 group">
+                    <i class="fa-solid fa-shield-halved w-5 text-center opacity-70 group-hover:opacity-100"></i> Authentication
+                </a>
+                <a href="api-reference.html" class="nav-link flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg mb-1 group">
+                    <i class="fa-solid fa-server w-5 text-center opacity-70 group-hover:opacity-100"></i> API Endpoints
+                </a>
+                <a href="support.html" class="nav-link flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg mb-1 group">
+                    <i class="fa-solid fa-headset w-5 text-center opacity-70 group-hover:opacity-100"></i> Support Center
+                </a>
+
+                <div class="px-2 pt-4 border-t border-white/5 mt-2">
+                    <a href="demo.html" class="flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-xar-primary/10 to-transparent border border-xar-primary/20 text-xar-primary font-bold rounded-lg hover:bg-xar-primary hover:text-black transition-all duration-300 group">
+                        <i class="fa-solid fa-mobile-screen group-hover:animate-bounce"></i> Live Demo
+                    </a>
+                </div>
             </nav>
 
-            <div class="p-6 border-t border-white/5 hidden md:block">
+            <div class="p-6 border-t border-white/5 bg-black/20 backdrop-blur-sm">
                 <div class="flex items-center gap-3">
-                    <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                    <span class="text-xs text-gray-400">System Status: <strong>Online</strong></span>
+                    <div id="status-dot" class="w-2 h-2 rounded-full bg-gray-600"></div>
+                    <div class="flex flex-col">
+                        <span class="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Server Status</span>
+                        <span id="status-text" class="text-xs text-gray-400 font-mono">Connecting...</span>
+                    </div>
                 </div>
             </div>
         </aside>
 
-        <main class="flex-1 overflow-y-auto relative w-full bg-xar-dark scroll-smooth">
-            <div class="max-w-4xl mx-auto px-6 md:px-10 py-10 md:py-20">
-                <h1 class="text-3xl md:text-4xl font-bold text-white mb-6">Selamat Datang di Developer Console</h1>
-                <p class="text-lg text-gray-400 mb-10 leading-relaxed border-l-4 border-xar-green pl-6">
-                    Pusat dokumentasi teknis untuk mengintegrasikan layanan MEXA ke dalam aplikasi Anda.
-                    Silakan pilih modul di menu navigasi untuk melihat detail endpoint.
-                </p>
+        <main class="flex-1 overflow-y-auto relative w-full bg-xar-dark custom-scrollbar">
+            <div class="fixed top-0 right-0 w-[800px] h-[800px] bg-gradient-to-b from-xar-primary/5 to-transparent rounded-full blur-[120px] pointer-events-none"></div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <a href="auth.html" class="group glass-panel p-6 rounded-xl border border-white/10 hover:border-xar-green transition cursor-pointer relative overflow-hidden">
-                        <div class="absolute inset-0 bg-xar-green/5 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500"></div>
+            <div class="max-w-5xl mx-auto px-6 md:px-12 py-12 md:py-20 relative z-10">
+                
+                <div class="mb-12">
+                    <h1 class="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+                        Developer Console
+                    </h1>
+                    <p class="text-lg text-gray-400 max-w-3xl leading-relaxed border-l-4 border-xar-primary pl-6">
+                        Pusat kendali integrasi layanan <strong class="text-white">MEXA</strong>. Pilih modul di sidebar untuk mengakses dokumentasi teknis, endpoint, dan panduan keamanan.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+                    <a href="auth.html" class="glass-panel interactive p-8 rounded-2xl group cursor-pointer border border-white/5 hover:border-xar-primary/50 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-xar-primary/10 rounded-full blur-[50px] group-hover:bg-xar-primary/20 transition-all duration-500"></div>
                         <div class="relative z-10">
-                            <div class="flex justify-between items-start mb-4">
-                                <div class="w-12 h-12 rounded-lg bg-xar-green/10 flex items-center justify-center">
-                                    <i class="fa-solid fa-key text-2xl text-xar-green"></i>
+                            <div class="flex justify-between items-start mb-6">
+                                <div class="w-12 h-12 rounded-xl bg-xar-primary/10 flex items-center justify-center border border-xar-primary/20">
+                                    <i class="fa-solid fa-key text-2xl text-xar-primary"></i>
                                 </div>
-                                <i class="fa-solid fa-arrow-right text-gray-600 group-hover:text-xar-green transition"></i>
+                                <i class="fa-solid fa-arrow-right text-gray-600 group-hover:text-xar-primary group-hover:translate-x-1 transition-all"></i>
                             </div>
-                            <h3 class="text-xl font-bold text-white mb-2">Authentication</h3>
-                            <p class="text-sm text-gray-500 group-hover:text-gray-400">Pelajari cara mendapatkan Token JWT untuk akses aman ke sistem.</p>
+                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-xar-primary transition-colors">Authentication</h3>
+                            <p class="text-sm text-gray-400 leading-relaxed">
+                                Dapatkan akses token JWT secure untuk memulai sesi integrasi dengan sistem backend.
+                            </p>
                         </div>
                     </a>
 
-                    <a href="api-reference.html" class="group glass-panel p-6 rounded-xl border border-white/10 hover:border-xar-blue transition cursor-pointer relative overflow-hidden">
-                         <div class="absolute inset-0 bg-xar-blue/5 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500"></div>
+                    <a href="api-reference.html" class="glass-panel interactive p-8 rounded-2xl group cursor-pointer border border-white/5 hover:border-xar-accent/50 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-xar-accent/10 rounded-full blur-[50px] group-hover:bg-xar-accent/20 transition-all duration-500"></div>
                         <div class="relative z-10">
-                            <div class="flex justify-between items-start mb-4">
-                                <div class="w-12 h-12 rounded-lg bg-xar-blue/10 flex items-center justify-center">
-                                    <i class="fa-solid fa-server text-2xl text-xar-blue"></i>
+                            <div class="flex justify-between items-start mb-6">
+                                <div class="w-12 h-12 rounded-xl bg-xar-accent/10 flex items-center justify-center border border-xar-accent/20">
+                                    <i class="fa-solid fa-server text-2xl text-xar-accent"></i>
                                 </div>
-                                <i class="fa-solid fa-arrow-right text-gray-600 group-hover:text-xar-blue transition"></i>
+                                <i class="fa-solid fa-arrow-right text-gray-600 group-hover:text-xar-accent group-hover:translate-x-1 transition-all"></i>
                             </div>
-                            <h3 class="text-xl font-bold text-white mb-2">API Endpoints</h3>
-                            <p class="text-sm text-gray-500 group-hover:text-gray-400">Daftar lengkap endpoint untuk Booking, Workshop, dan Payment.</p>
+                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-xar-accent transition-colors">Core Endpoints</h3>
+                            <p class="text-sm text-gray-400 leading-relaxed">
+                                Dokumentasi lengkap untuk modul Booking, Workshop Locator, dan Payment Gateway.
+                            </p>
                         </div>
                     </a>
                 </div>
 
-                <div class="mt-12 p-6 glass-panel rounded-xl border border-white/5">
-                    <h4 class="text-white font-bold mb-4">Quick Start</h4>
-                    <div class="bg-black p-4 rounded border border-white/10 font-mono text-xs md:text-sm text-gray-300 overflow-x-auto">
-                        <p class="mb-2"><span class="text-gray-500"># 1. Clone Repository</span></p>
-                        <p class="mb-4"><span class="text-xar-blue">git</span> clone https://github.com/razzaqinspires/bengkel-backend-api.git</p>
+                <div class="glass-panel p-1 rounded-xl border border-white/10 bg-black/40 backdrop-blur-md">
+                    <div class="bg-[#050505] rounded-lg p-6 font-mono text-sm overflow-x-auto custom-scrollbar">
+                        <div class="flex items-center gap-2 mb-4 border-b border-white/5 pb-2">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            <span class="ml-2 text-xs text-gray-500">bash — Quick Start</span>
+                        </div>
                         
-                        <p class="mb-2"><span class="text-gray-500"># 2. Install Dependencies</span></p>
-                        <p class="mb-4"><span class="text-xar-green">npm</span> install</p>
+                        <div class="space-y-4">
+                            <div>
+                                <p class="text-gray-500 mb-1"># 1. Clone Repository</p>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xar-accent">$</span>
+                                    <span class="text-white">git clone</span>
+                                    <span class="text-gray-400">https://github.com/razzaqinspires/bengkel-backend-api.git</span>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <p class="text-gray-500 mb-1"># 2. Install Dependencies</p>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xar-accent">$</span>
+                                    <span class="text-white">npm install</span>
+                                </div>
+                            </div>
 
-                         <p class="mb-2"><span class="text-gray-500"># 3. Run Server</span></p>
-                        <p><span class="text-xar-green">npm</span> run dev</p>
+                             <div>
+                                <p class="text-gray-500 mb-1"># 3. Run Development Server</p>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xar-accent">$</span>
+                                    <span class="text-white">npm run dev</span>
+                                    <span class="text-xar-primary animate-pulse ml-2"># Server running on :3000</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+                <footer class="mt-20 pt-8 border-t border-white/5 text-center text-xs text-gray-600 font-mono">
+                    <p>&copy; <span class="current-year">2026</span> XARVIONEX Corp. | MEXA System Core v4.0</p>
+                </footer>
             </div>
         </main>
     </div>
+
+    <footer class="bg-black py-16 border-t border-white/5 text-center md:text-left z-10 relative mt-auto">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div class="col-span-1 md:col-span-2">
+                <div class="flex items-center gap-2 mb-6 justify-center md:justify-start">
+                    <div class="w-8 h-8 rounded bg-xar-primary flex items-center justify-center text-black font-bold">X</div>
+                    <h2 class="text-2xl font-bold text-white tracking-wider">XARVIONEX</h2>
+                </div>
+                <p class="text-gray-500 text-sm max-w-sm mx-auto md:mx-0 leading-relaxed">
+                    Menciptakan masa depan layanan digital melalui integrasi kecerdasan buatan dan infrastruktur fisik yang presisi.
+                </p>
+            </div>
+            
+            <div>
+                <h4 class="text-white font-bold mb-6 tracking-widest text-xs uppercase border-b border-white/10 pb-2 inline-block">Developer</h4>
+                <ul class="space-y-4 text-sm text-gray-500">
+                    <li><a href="documentation.html" class="hover:text-xar-primary transition-colors flex items-center gap-2 justify-center md:justify-start"><i class="fa-solid fa-book opacity-50"></i> Dokumentasi API</a></li>
+                    <li><a href="https://github.com/razzaqinspires/bengkel-backend-api" target="_blank" class="hover:text-xar-primary transition-colors flex items-center gap-2 justify-center md:justify-start"><i class="fa-brands fa-github opacity-50"></i> GitHub Repository</a></li>
+                    <li><a href="https://bengkel-backend-api.vercel.app/" target="_blank" class="hover:text-xar-primary transition-colors flex items-center gap-2 justify-center md:justify-start"><i class="fa-solid fa-server opacity-50"></i> Status Server</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="text-white font-bold mb-6 tracking-widest text-xs uppercase border-b border-white/10 pb-2 inline-block">Connect</h4>
+                <ul class="space-y-4 text-sm text-gray-500">
+                    <li><a href="mailto:xarvionex@gmail.com" class="hover:text-xar-primary transition-colors flex items-center gap-2 justify-center md:justify-start"><i class="fa-solid fa-envelope opacity-50"></i> xarvionex@gmail.com</a></li>
+                    <li><a href="https://www.instagram.com/xarvionex?igsh=MWg2ZDJ1Y215b2ZuOA==" target="_blank" class="hover:text-xar-primary transition-colors flex items-center gap-2 justify-center md:justify-start"><i class="fa-brands fa-instagram opacity-50"></i> Instagram</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="mt-16 pt-8 border-t border-white/5 text-center text-xs text-gray-600 font-mono">
+            &copy; <span class="current-year">2026</span> XARVIONEX Corp. All Rights Reserved. <span class="mx-2">|</span> MEXA System V4.0
+        </div>
+    </footer>
 
     <script src="js/main.js"></script>
 </body>

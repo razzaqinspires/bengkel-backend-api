@@ -1,75 +1,200 @@
-/* XARVIONEX - MEXA Global Styles */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
+/* * XARVIONEX - MEXA SYSTEM CORE STYLES v4.0 (Evolution)
+ * Architecture: CSS Variables + Glassmorphism Level 3 + Hardware Acceleration
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+:root {
+    /* --- COLOR PALETTE (Neon-Organic) --- */
+    --xar-bg-deep: #030303;
+    --xar-bg-panel: #0a0a0a;
+    --xar-bg-surface: #111111;
+    
+    --xar-primary: #00ff88;       /* Toxic Green */
+    --xar-primary-dim: rgba(0, 255, 136, 0.1);
+    --xar-primary-glow: rgba(0, 255, 136, 0.6);
+    
+    --xar-accent: #00b8ff;        /* Cyber Blue */
+    --xar-alert: #ff3366;         /* System Error */
+    --xar-warning: #ffcc00;       /* Processing */
+
+    --xar-text-main: #e5e5e5;
+    --xar-text-muted: #888888;
+    
+    /* --- BORDERS & GLASS --- */
+    --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+    --glass-shine: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+    
+    /* --- DIMENSIONS & SPACING --- */
+    --sidebar-width: 280px;
+    --header-height: 80px;
+    
+    /* --- Z-INDEX LAYERS --- */
+    --z-background: -10;
+    --z-base: 10;
+    --z-sticky: 40;
+    --z-overlay: 50;
+    --z-drawer: 60;
+    --z-tooltip: 100;
+}
+
+/* --- BASE RESET & TYPOGRAPHY --- */
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 
 body {
-    background-color: #050505;
+    background-color: var(--xar-bg-deep);
+    color: var(--xar-text-main);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* High-End Texture: Subtle Noise Overlay */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: var(--z-overlay);
+    opacity: 0.4;
+}
+
+/* Background Grid System (Complex) */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
     background-image: 
-        linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+        linear-gradient(var(--xar-primary-dim) 1px, transparent 1px),
+        linear-gradient(90deg, var(--xar-primary-dim) 1px, transparent 1px);
     background-size: 50px 50px;
-    font-family: 'Inter', sans-serif;
-    color: #e5e5e5;
+    mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+    z-index: var(--z-background);
+    pointer-events: none;
+    opacity: 0.3;
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #0a0a0a; }
-::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #00ff88; }
+/* --- ADVANCED UTILITIES --- */
 
-/* Components */
+/* 1. Ultra Glass Panel */
 .glass-panel {
-    background: rgba(15, 15, 15, 0.7);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    background: rgba(10, 10, 10, 0.7);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: var(--glass-border);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
 }
 
-.nav-link.active {
-    border-left: 3px solid #00ff88;
-    background: linear-gradient(90deg, rgba(0,255,136,0.1) 0%, transparent 100%);
-    color: #00ff88;
+/* Add Shine Effect on Hover for Cards */
+.glass-panel.interactive {
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.glass-panel.interactive::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--glass-shine);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+.glass-panel.interactive:hover {
+    transform: translateY(-2px);
+    border-color: rgba(0, 255, 136, 0.3);
+    box-shadow: 0 10px 40px -10px rgba(0, 255, 136, 0.15);
+}
+.glass-panel.interactive:hover::after {
+    opacity: 1;
 }
 
-.code-snippet {
+/* 2. Typography & Selection */
+::selection {
+    background: var(--xar-primary);
+    color: #000;
+}
+code, pre {
     font-family: 'JetBrains Mono', monospace;
-    background: #0a0a0a;
-    border: 1px solid #333;
 }
-
 .text-glow {
-    text-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+    text-shadow: 0 0 20px var(--xar-primary-glow);
 }
-
-.brand-gradient {
-    background: linear-gradient(to right, #00ff88, #00b8ff);
+.text-gradient {
+    background: linear-gradient(to right, #fff, #888);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-/* Mobile Menu Transitions */
-.mobile-nav-overlay {
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+/* 3. Navigation States */
+.nav-link {
+    position: relative;
+    transition: all 0.3s ease;
+    border-left: 2px solid transparent;
+}
+.nav-link.active {
+    background: linear-gradient(90deg, var(--xar-primary-dim) 0%, transparent 100%);
+    border-left-color: var(--xar-primary);
+    color: var(--xar-primary) !important;
+}
+.nav-link:hover:not(.active) {
+    background: rgba(255,255,255,0.03);
+    color: white;
 }
 
-.sidebar-transition {
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+/* 4. The "Console" Code Block */
+pre {
+    background: #050505 !important;
+    border: 1px solid #333;
+    border-radius: 0.5rem;
+    position: relative;
+}
+/* Scrollbar khusus Code Block */
+pre::-webkit-scrollbar { height: 6px; }
+pre::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+pre::-webkit-scrollbar-thumb:hover { background: var(--xar-primary); }
+
+
+/* --- ANIMATIONS (Hardware Accelerated) --- */
+
+@keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 10px var(--xar-primary-dim); }
+    50% { box-shadow: 0 0 25px var(--xar-primary-glow); }
 }
 
-/* Hide scrollbar for mobile menu but allow scroll */
-.no-scrollbar::-webkit-scrollbar {
-    display: none;
-}
-.no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
 }
 
-/* Fix text rendering */
-strong {
-    color: #fff;
-    font-weight: 700;
+@keyframes slide-in-right {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+.animate-pulse-glow { animation: pulse-glow 3s infinite; }
+.animate-float { animation: float 6s ease-in-out infinite; will-change: transform; }
+
+/* --- GLOBAL SCROLLBAR (System Level) --- */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: var(--xar-bg-deep);
+}
+::-webkit-scrollbar-thumb {
+    background: #222;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--xar-primary);
 }
