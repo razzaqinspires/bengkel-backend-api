@@ -1,0 +1,42 @@
+<div class="max-w-4xl mx-auto px-8 py-20 space-y-12">
+                <div>
+                    <h2 class="text-4xl font-bold text-white mb-4">Core API Reference</h2>
+                    <p class="text-gray-400">Dokumentasi teknis untuk integrasi Frontend (Mobile Apps & Web Dashboard).</p>
+                </div>
+
+                <div class="glass-panel rounded-xl p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="bg-green-500/20 text-green-400 px-3 py-1 text-xs font-bold rounded">GET</span>
+                        <h3 class="text-xl font-bold text-white">/workshops/nearby</h3>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-4">Mencari bengkel dalam radius tertentu dari koordinat user.</p>
+                    
+                    <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Query Parameters</h4>
+                    <table class="w-full text-left text-sm text-gray-400 mb-4">
+                        <thead class="border-b border-white/10 text-white">
+                            <tr><th class="py-2">Param</th><th>Type</th><th>Description</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-white/5"><td class="py-2 text-xar-green">lat</td><td>Float</td><td>Latitude User (e.g. -6.200)</td></tr>
+                            <tr class="border-b border-white/5"><td class="py-2 text-xar-green">long</td><td>Float</td><td>Longitude User (e.g. 106.816)</td></tr>
+                            <tr><td class="py-2 text-xar-green">radius</td><td>Int</td><td>Jarak dalam KM (Default: 5)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="glass-panel rounded-xl p-6 border-l-4 border-xar-blue">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="bg-blue-500/20 text-blue-400 px-3 py-1 text-xs font-bold rounded">POST</span>
+                        <h3 class="text-xl font-bold text-white">/bookings</h3>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-4">Membuat pesanan baru. Membutuhkan Header <code>Authorization: Bearer Token</code>.</p>
+                    
+                    <pre class="code-snippet p-4 rounded text-sm text-blue-300 overflow-x-auto">
+{
+  "workshopId": 1,
+  "serviceIds": [5, 8],  // Array ID Layanan
+  "scheduledDate": "2026-02-10T14:00:00.000Z",
+  "note": "Motor matic, keluhan rem bunyi"
+}</pre>
+                </div>
+            </div>

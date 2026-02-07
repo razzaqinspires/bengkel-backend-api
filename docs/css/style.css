@@ -1,0 +1,49 @@
+/* XARVIONEX - MEXA Global Styles */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
+
+body {
+    background-color: #050505;
+    background-image: 
+        linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    font-family: 'Inter', sans-serif;
+    color: #e5e5e5;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #0a0a0a; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #00ff88; }
+
+/* Components */
+.glass-panel {
+    background: rgba(15, 15, 15, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.nav-link.active {
+    border-left: 3px solid #00ff88;
+    background: linear-gradient(90deg, rgba(0,255,136,0.1) 0%, transparent 100%);
+    color: #00ff88;
+}
+
+.code-snippet {
+    font-family: 'JetBrains Mono', monospace;
+    background: #0a0a0a;
+    border: 1px solid #333;
+}
+
+.text-glow {
+    text-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+}
+
+.brand-gradient {
+    background: linear-gradient(to right, #00ff88, #00b8ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
