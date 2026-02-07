@@ -217,4 +217,5 @@ Penggunaan Source Code ini tunduk pada ketentuan berikut:
 
 ---
 
-*Built with ❤️ by Arifi Razzaq.*
+*Built with ❤️ Team Xarvionex.*
+> This backend was created by Arifi Razzaq
