@@ -1,41 +1,105 @@
-<div class="max-w-4xl mx-auto px-8 py-20">
-                <div class="text-center mb-16">
-                    <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-xar-green to-blue-600 mb-6 shadow-lg shadow-green-500/20">
-                        <i class="fa-solid fa-headset text-3xl text-white"></i>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support | MEXA API</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'xar-green': '#00ff88',
+                        'xar-blue': '#00b8ff',
+                        'xar-dark': '#050505'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-xar-dark text-gray-300 antialiased overflow-x-hidden">
+
+    <header class="md:hidden fixed top-0 w-full z-40 glass-panel border-b border-white/5 flex justify-between items-center px-6 py-4 bg-xar-dark">
+        <div class="flex items-center gap-3">
+            <a href="index.html" class="text-gray-400 hover:text-white"><i class="fa-solid fa-arrow-left"></i></a>
+            <span class="font-bold text-white tracking-wider">SUPPORT</span>
+        </div>
+        <button id="mobile-menu-btn" class="text-white focus:outline-none">
+            <i class="fa-solid fa-bars text-xl"></i>
+        </button>
+    </header>
+
+    <div id="mobile-overlay" class="fixed inset-0 bg-black/80 z-40 hidden opacity-0 transition-opacity duration-300 md:hidden backdrop-blur-sm"></div>
+
+    <div class="flex h-screen pt-16 md:pt-0">
+        
+        <aside id="sidebar" class="fixed inset-y-0 left-0 w-72 glass-panel border-r border-white/5 z-50 transform -translate-x-full md:translate-x-0 md:relative transition-transform duration-300 flex flex-col h-full bg-[#0a0a0a]">
+            
+            <div class="absolute top-4 right-4 md:hidden">
+                <button id="close-menu-btn" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-2xl"></i></button>
+            </div>
+
+            <div class="p-8 border-b border-white/5">
+                <a href="index.html" class="flex items-center gap-2 mb-4 text-xs text-gray-500 hover:text-xar-green transition">
+                    <i class="fa-solid fa-arrow-left"></i> Home
+                </a>
+                <h1 class="text-xl font-bold tracking-tighter text-white">
+                    MEXA <span class="text-xar-green">DOCS</span>
+                </h1>
+            </div>
+            
+            <nav class="flex-1 py-6 space-y-1 overflow-y-auto">
+                <a href="documentation.html" class="nav-link block px-6 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5">Overview</a>
+                <a href="auth.html" class="nav-link block px-6 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5">Authentication</a>
+                <a href="api-reference.html" class="nav-link block px-6 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5">Endpoints</a>
+                <a href="support.html" class="nav-link active block px-6 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 border-l-2 border-xar-green bg-white/5">Support</a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 overflow-y-auto relative w-full bg-xar-dark">
+            <div class="max-w-4xl mx-auto px-6 md:px-10 py-10">
+                <div class="text-center mb-12">
+                    <div class="w-16 h-16 rounded-full bg-xar-green/10 flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-headset text-3xl text-xar-green"></i>
                     </div>
-                    <h1 class="text-5xl font-bold text-white mb-4">Pusat Dukungan MEXA</h1>
-                    <p class="text-gray-400 max-w-xl mx-auto">
-                        Tim XARVIONEX siap membantu integrasi teknis, kemitraan bisnis, dan penyelesaian masalah operasional.
-                    </p>
+                    <h1 class="text-3xl font-bold text-white mb-2">Pusat Bantuan</h1>
+                    <p class="text-gray-400">Tim XARVIONEX siap membantu kendala teknis dan bisnis Anda.</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="glass-panel p-8 rounded-xl text-center hover:border-xar-green transition duration-300">
-                        <i class="fa-solid fa-code text-4xl text-gray-600 mb-4"></i>
-                        <h3 class="text-xl font-bold text-white mb-2">Developer Support</h3>
-                        <p class="text-sm text-gray-500 mb-6">Kendala saat integrasi API atau bug report?</p>
-                        <a href="mailto:xarvionex@gmail.com?subject=[DEV] Issue Report" class="text-xar-green font-bold hover:underline">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass-panel p-8 rounded-xl border border-white/10 hover:border-xar-green transition text-center">
+                        <i class="fa-solid fa-bug text-4xl text-gray-600 mb-4"></i>
+                        <h3 class="text-xl font-bold text-white mb-2">Technical Issue</h3>
+                        <p class="text-sm text-gray-500 mb-6">Bug pada API, error server, atau kendala integrasi.</p>
+                        <a href="mailto:xarvionex@gmail.com" class="text-xar-green font-bold hover:underline">
                             xarvionex@gmail.com
                         </a>
                     </div>
 
-                    <div class="glass-panel p-8 rounded-xl text-center hover:border-xar-blue transition duration-300">
-                        <i class="fa-solid fa-handshake text-4xl text-gray-600 mb-4"></i>
-                        <h3 class="text-xl font-bold text-white mb-2">Kemitraan & Bisnis</h3>
-                        <p class="text-sm text-gray-500 mb-6">Ingin mendaftarkan jaringan bengkel atau investasi?</p>
-                        <a href="mailto:xarvionex@gmail.com?subject=[BIZ] Partnership Inquiry" class="text-xar-blue font-bold hover:underline">
+                    <div class="glass-panel p-8 rounded-xl border border-white/10 hover:border-xar-blue transition text-center">
+                        <i class="fa-solid fa-briefcase text-4xl text-gray-600 mb-4"></i>
+                        <h3 class="text-xl font-bold text-white mb-2">Business Partnership</h3>
+                        <p class="text-sm text-gray-500 mb-6">Kerjasama enterprise, pendaftaran mitra skala besar.</p>
+                        <a href="mailto:xarvionex@gmail.com" class="text-xar-blue font-bold hover:underline">
                             xarvionex@gmail.com
                         </a>
                     </div>
                 </div>
 
-                <div class="mt-16 p-8 glass-panel rounded-xl">
-                    <h3 class="text-lg font-bold text-white mb-4">Kantor Pusat</h3>
+                <div class="mt-12 p-8 glass-panel border border-white/10 rounded-xl text-center">
                     <p class="text-gray-400 text-sm">
                         <strong>XARVIONEX HQ</strong><br>
-                        Gedung Inovasi Digital, Lantai 12<br>
-                        Jakarta, Indonesia<br>
-                        <span class="text-xs text-gray-600 mt-2 block">CEO: Arifi Razzaq</span>
+                        Jakarta, Indonesia
                     </p>
                 </div>
             </div>
+        </main>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>

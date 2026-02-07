@@ -1,42 +1,123 @@
-<div class="max-w-4xl mx-auto px-8 py-20 space-y-12">
-                <div>
-                    <h2 class="text-4xl font-bold text-white mb-4">Core API Reference</h2>
-                    <p class="text-gray-400">Dokumentasi teknis untuk integrasi Frontend (Mobile Apps & Web Dashboard).</p>
-                </div>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Reference | MEXA API</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'xar-green': '#00ff88',
+                        'xar-blue': '#00b8ff',
+                        'xar-dark': '#050505'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-xar-dark text-gray-300 antialiased overflow-x-hidden">
 
-                <div class="glass-panel rounded-xl p-6">
-                    <div class="flex items-center gap-3 mb-4">
-                        <span class="bg-green-500/20 text-green-400 px-3 py-1 text-xs font-bold rounded">GET</span>
-                        <h3 class="text-xl font-bold text-white">/workshops/nearby</h3>
-                    </div>
-                    <p class="text-sm text-gray-400 mb-4">Mencari bengkel dalam radius tertentu dari koordinat user.</p>
-                    
-                    <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Query Parameters</h4>
-                    <table class="w-full text-left text-sm text-gray-400 mb-4">
-                        <thead class="border-b border-white/10 text-white">
-                            <tr><th class="py-2">Param</th><th>Type</th><th>Description</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr class="border-b border-white/5"><td class="py-2 text-xar-green">lat</td><td>Float</td><td>Latitude User (e.g. -6.200)</td></tr>
-                            <tr class="border-b border-white/5"><td class="py-2 text-xar-green">long</td><td>Float</td><td>Longitude User (e.g. 106.816)</td></tr>
-                            <tr><td class="py-2 text-xar-green">radius</td><td>Int</td><td>Jarak dalam KM (Default: 5)</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+    <header class="md:hidden fixed top-0 w-full z-40 glass-panel border-b border-white/5 flex justify-between items-center px-6 py-4 bg-xar-dark">
+        <div class="flex items-center gap-3">
+            <a href="index.html" class="text-gray-400 hover:text-white"><i class="fa-solid fa-arrow-left"></i></a>
+            <span class="font-bold text-white tracking-wider">API REF</span>
+        </div>
+        <button id="mobile-menu-btn" class="text-white focus:outline-none">
+            <i class="fa-solid fa-bars text-xl"></i>
+        </button>
+    </header>
 
-                <div class="glass-panel rounded-xl p-6 border-l-4 border-xar-blue">
-                    <div class="flex items-center gap-3 mb-4">
-                        <span class="bg-blue-500/20 text-blue-400 px-3 py-1 text-xs font-bold rounded">POST</span>
-                        <h3 class="text-xl font-bold text-white">/bookings</h3>
-                    </div>
-                    <p class="text-sm text-gray-400 mb-4">Membuat pesanan baru. Membutuhkan Header <code>Authorization: Bearer Token</code>.</p>
-                    
-                    <pre class="code-snippet p-4 rounded text-sm text-blue-300 overflow-x-auto">
-{
-  "workshopId": 1,
-  "serviceIds": [5, 8],  // Array ID Layanan
-  "scheduledDate": "2026-02-10T14:00:00.000Z",
-  "note": "Motor matic, keluhan rem bunyi"
-}</pre>
-                </div>
+    <div id="mobile-overlay" class="fixed inset-0 bg-black/80 z-40 hidden opacity-0 transition-opacity duration-300 md:hidden backdrop-blur-sm"></div>
+
+    <div class="flex h-screen pt-16 md:pt-0">
+        
+        <aside id="sidebar" class="fixed inset-y-0 left-0 w-72 glass-panel border-r border-white/5 z-50 transform -translate-x-full md:translate-x-0 md:relative transition-transform duration-300 flex flex-col h-full bg-[#0a0a0a]">
+            
+            <div class="absolute top-4 right-4 md:hidden">
+                <button id="close-menu-btn" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-2xl"></i></button>
             </div>
+
+            <div class="p-8 border-b border-white/5">
+                <a href="index.html" class="flex items-center gap-2 mb-4 text-xs text-gray-500 hover:text-xar-green transition">
+                    <i class="fa-solid fa-arrow-left"></i> Home
+                </a>
+                <h1 class="text-xl font-bold tracking-tighter text-white">
+                    MEXA <span class="text-xar-green">DOCS</span>
+                </h1>
+            </div>
+            
+            <nav class="flex-1 py-6 space-y-1 overflow-y-auto">
+                <a href="documentation.html" class="nav-link block px-6 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5">Overview</a>
+                <a href="auth.html" class="nav-link block px-6 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5">Authentication</a>
+                <a href="api-reference.html" class="nav-link active block px-6 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 border-l-2 border-xar-green bg-white/5">Endpoints</a>
+                <a href="support.html" class="nav-link block px-6 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5">Support</a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 overflow-y-auto relative w-full bg-xar-dark">
+            <div class="max-w-4xl mx-auto px-6 md:px-10 py-10">
+                <h1 class="text-3xl font-bold text-white mb-6">Core API Reference</h1>
+                <p class="text-gray-400 mb-8">Dokumentasi endpoint utama untuk fitur bengkel dan transaksi.</p>
+
+                <div class="glass-panel rounded-xl overflow-hidden mb-8 border border-white/10">
+                    <div class="p-4 border-b border-white/5 flex justify-between items-center bg-white/5">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-green-500/20 text-green-400 px-2 py-1 text-xs font-bold rounded">GET</span>
+                            <span class="font-mono text-sm text-gray-300">/workshops/nearby</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-sm text-gray-400 mb-4">Mencari bengkel terdekat berdasarkan koordinat GPS.</p>
+                        
+                        <h4 class="text-xs font-bold text-gray-500 uppercase mb-2">Query Params</h4>
+                        <div class="bg-[#0f0f0f] p-4 rounded border border-white/5 text-sm mb-4">
+                            <div class="flex justify-between mb-2"><span class="text-xar-green font-mono">lat</span> <span class="text-gray-400">Latitude (float)</span></div>
+                            <div class="flex justify-between mb-2"><span class="text-xar-green font-mono">long</span> <span class="text-gray-400">Longitude (float)</span></div>
+                            <div class="flex justify-between"><span class="text-xar-green font-mono">radius</span> <span class="text-gray-400">Jarak KM (int)</span></div>
+                        </div>
+
+                        <div class="relative group">
+                            <button onclick="copyCode(this)" class="absolute top-2 right-2 text-xs text-gray-500 hover:text-white"><i class="fa-regular fa-copy"></i> Copy</button>
+                            <pre class="bg-[#0f0f0f] p-4 rounded text-sm text-blue-300 overflow-x-auto border border-white/5">
+curl "https://api-mexa.xarvionex.com/v1/workshops/nearby?lat=-6.2&long=106.8&radius=5"</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel rounded-xl overflow-hidden mb-8 border border-white/10">
+                    <div class="p-4 border-b border-white/5 flex justify-between items-center bg-white/5">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-blue-500/20 text-blue-400 px-2 py-1 text-xs font-bold rounded">POST</span>
+                            <span class="font-mono text-sm text-gray-300">/bookings</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-sm text-gray-400 mb-4">Membuat pesanan baru (Membutuhkan Header Authorization).</p>
+                        <div class="relative group">
+                            <button onclick="copyCode(this)" class="absolute top-2 right-2 text-xs text-gray-500 hover:text-white"><i class="fa-regular fa-copy"></i> Copy</button>
+                            <pre class="bg-[#0f0f0f] p-4 rounded text-sm text-blue-300 overflow-x-auto border border-white/5">
+curl -X POST https://api-mexa.xarvionex.com/v1/bookings \
+-H "Authorization: Bearer <TOKEN>" \
+-H "Content-Type: application/json" \
+-d '{
+  "workshopId": 12,
+  "serviceIds": [1, 4],
+  "note": "Ban bocor halus"
+}'</pre>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>
