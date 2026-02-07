@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Developer Console | MEXA API</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -14,7 +15,8 @@
                     colors: {
                         'xar-green': '#00ff88',
                         'xar-blue': '#00b8ff',
-                        'xar-dark': '#0a0a0a'
+                        'xar-dark': '#050505',
+                        'xar-panel': '#0a0a0a'
                     }
                 }
             }
@@ -23,27 +25,34 @@
 </head>
 <body class="bg-xar-dark text-gray-300 antialiased overflow-x-hidden">
 
-    <header class="md:hidden fixed top-0 w-full z-40 glass-panel border-b border-white/5 flex justify-between items-center px-6 py-4">
+    <header class="md:hidden fixed top-0 w-full z-40 glass-panel border-b border-white/5 flex justify-between items-center px-6 py-4 bg-xar-dark/90 backdrop-blur-md">
         <div class="flex items-center gap-3">
-            <a href="index.html" class="text-gray-400 hover:text-white"><i class="fa-solid fa-arrow-left"></i></a>
+            <a href="index.html" class="text-gray-400 hover:text-white transition"><i class="fa-solid fa-arrow-left"></i></a>
             <span class="font-bold text-white tracking-wider">DEV CONSOLE</span>
         </div>
-        <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none">
+        <button id="mobile-menu-btn" class="text-white focus:outline-none p-2 active:scale-95 transition">
             <i class="fa-solid fa-bars text-xl"></i>
         </button>
     </header>
 
-    <div id="mobile-overlay" class="fixed inset-0 bg-black/80 z-40 hidden opacity-0 transition-opacity duration-300 md:hidden backdrop-blur-sm"></div>
+    <div id="mobile-overlay" class="fixed inset-0 bg-black/90 z-50 hidden opacity-0 transition-opacity duration-300 md:hidden backdrop-blur-sm"></div>
 
     <div class="flex h-screen pt-16 md:pt-0">
         
-        <aside id="sidebar" class="fixed inset-y-0 left-0 w-72 glass-panel border-r border-white/5 z-50 transform -translate-x-full md:translate-x-0 md:relative transition-transform duration-300 flex flex-col h-full">
+        <aside id="sidebar" class="
+            fixed inset-y-0 right-0 w-[280px] z-[60] transform translate-x-full transition-transform duration-300 shadow-2xl
+            md:translate-x-0 md:relative md:inset-auto md:w-72 md:block md:border-r
+            bg-[#0a0a0a] border-l md:border-l-0 border-white/10 glass-panel flex flex-col h-full
+        ">
             
-            <div class="absolute top-4 right-4 md:hidden">
-                <button id="close-menu-btn" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-2xl"></i></button>
+            <div class="p-4 flex justify-between items-center border-b border-white/5 md:hidden bg-[#0f0f0f]">
+                <span class="text-white font-bold tracking-widest uppercase text-sm">Menu</span>
+                <button id="close-menu-btn" class="text-gray-400 hover:text-red-500 transition p-2">
+                    <i class="fa-solid fa-xmark text-2xl"></i>
+                </button>
             </div>
 
-            <div class="p-8 border-b border-white/5">
+            <div class="p-8 border-b border-white/5 hidden md:block">
                 <a href="index.html" class="flex items-center gap-2 mb-4 text-xs text-gray-500 hover:text-xar-green transition">
                     <i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda
                 </a>
@@ -53,45 +62,82 @@
                 <p class="text-xs text-gray-500 mt-2">Versi 1.0.0 (Stable)</p>
             </div>
             
-            <nav class="flex-1 py-6 space-y-1 overflow-y-auto no-scrollbar">
-                <p class="px-6 text-xs font-bold text-gray-600 uppercase tracking-widest mb-3">Core Modules</p>
-                <a href="documentation.html" class="nav-link active block px-6 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 border-l-2 border-transparent">Overview</a>
-                <a href="auth.html" class="nav-link block px-6 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 border-l-2 border-transparent">Authentication</a>
-                <a href="api-reference.html" class="nav-link block px-6 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 border-l-2 border-transparent">Endpoints</a>
-                <a href="support.html" class="nav-link block px-6 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 border-l-2 border-transparent">Support</a>
+            <nav class="flex-1 py-6 space-y-1 overflow-y-auto custom-scrollbar">
+                <p class="px-6 text-xs font-bold text-gray-600 uppercase tracking-widest mb-3 md:block hidden">Core Modules</p>
+                
+                <a href="index.html" class="md:hidden block px-6 py-3 text-sm text-gray-300 hover:text-white border-b border-white/5 mb-2">
+                    <i class="fa-solid fa-home mr-2"></i> Beranda
+                </a>
+
+                <a href="documentation.html" class="nav-link active block px-6 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 border-l-2 border-xar-green bg-white/5 transition">Overview</a>
+                <a href="auth.html" class="nav-link block px-6 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 border-l-2 border-transparent transition">Authentication</a>
+                <a href="api-reference.html" class="nav-link block px-6 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 border-l-2 border-transparent transition">Endpoints</a>
+                <a href="support.html" class="nav-link block px-6 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 border-l-2 border-transparent transition">Support</a>
             </nav>
+
+            <div class="p-6 border-t border-white/5 hidden md:block">
+                <div class="flex items-center gap-3">
+                    <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                    <span class="text-xs text-gray-400">System Status: <strong>Online</strong></span>
+                </div>
+            </div>
         </aside>
 
-        <main class="flex-1 overflow-y-auto relative w-full bg-xar-dark">
+        <main class="flex-1 overflow-y-auto relative w-full bg-xar-dark scroll-smooth">
             <div class="max-w-4xl mx-auto px-6 md:px-10 py-10 md:py-20">
-                <h1 class="text-4xl font-bold text-white mb-6">Selamat Datang di Developer Console</h1>
-                <p class="text-lg text-gray-400 mb-10 leading-relaxed">
+                <h1 class="text-3xl md:text-4xl font-bold text-white mb-6">Selamat Datang di Developer Console</h1>
+                <p class="text-lg text-gray-400 mb-10 leading-relaxed border-l-4 border-xar-green pl-6">
                     Pusat dokumentasi teknis untuk mengintegrasikan layanan MEXA ke dalam aplikasi Anda.
-                    Silakan pilih modul di menu sebelah kiri untuk melihat detail endpoint, format request, dan response.
+                    Silakan pilih modul di menu navigasi untuk melihat detail endpoint.
                 </p>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <a href="auth.html" class="glass-panel p-6 rounded-xl hover:border-xar-green transition group cursor-pointer">
-                        <div class="flex justify-between items-start mb-4">
-                            <i class="fa-solid fa-key text-2xl text-xar-green"></i>
-                            <i class="fa-solid fa-arrow-right text-gray-600 group-hover:text-white transition"></i>
+                    <a href="auth.html" class="group glass-panel p-6 rounded-xl border border-white/10 hover:border-xar-green transition cursor-pointer relative overflow-hidden">
+                        <div class="absolute inset-0 bg-xar-green/5 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500"></div>
+                        <div class="relative z-10">
+                            <div class="flex justify-between items-start mb-4">
+                                <div class="w-12 h-12 rounded-lg bg-xar-green/10 flex items-center justify-center">
+                                    <i class="fa-solid fa-key text-2xl text-xar-green"></i>
+                                </div>
+                                <i class="fa-solid fa-arrow-right text-gray-600 group-hover:text-xar-green transition"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Authentication</h3>
+                            <p class="text-sm text-gray-500 group-hover:text-gray-400">Pelajari cara mendapatkan Token JWT untuk akses aman ke sistem.</p>
                         </div>
-                        <h3 class="text-xl font-bold text-white mb-2">Authentication</h3>
-                        <p class="text-sm text-gray-500">Pelajari cara mendapatkan Token JWT untuk akses aman.</p>
                     </a>
 
-                    <a href="api-reference.html" class="glass-panel p-6 rounded-xl hover:border-xar-blue transition group cursor-pointer">
-                        <div class="flex justify-between items-start mb-4">
-                            <i class="fa-solid fa-server text-2xl text-xar-blue"></i>
-                            <i class="fa-solid fa-arrow-right text-gray-600 group-hover:text-white transition"></i>
+                    <a href="api-reference.html" class="group glass-panel p-6 rounded-xl border border-white/10 hover:border-xar-blue transition cursor-pointer relative overflow-hidden">
+                         <div class="absolute inset-0 bg-xar-blue/5 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500"></div>
+                        <div class="relative z-10">
+                            <div class="flex justify-between items-start mb-4">
+                                <div class="w-12 h-12 rounded-lg bg-xar-blue/10 flex items-center justify-center">
+                                    <i class="fa-solid fa-server text-2xl text-xar-blue"></i>
+                                </div>
+                                <i class="fa-solid fa-arrow-right text-gray-600 group-hover:text-xar-blue transition"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">API Endpoints</h3>
+                            <p class="text-sm text-gray-500 group-hover:text-gray-400">Daftar lengkap endpoint untuk Booking, Workshop, dan Payment.</p>
                         </div>
-                        <h3 class="text-xl font-bold text-white mb-2">API Endpoints</h3>
-                        <p class="text-sm text-gray-500">Daftar lengkap endpoint untuk Booking, Workshop, dan Payment.</p>
                     </a>
+                </div>
+
+                <div class="mt-12 p-6 glass-panel rounded-xl border border-white/5">
+                    <h4 class="text-white font-bold mb-4">Quick Start</h4>
+                    <div class="bg-black p-4 rounded border border-white/10 font-mono text-xs md:text-sm text-gray-300 overflow-x-auto">
+                        <p class="mb-2"><span class="text-gray-500"># 1. Clone Repository</span></p>
+                        <p class="mb-4"><span class="text-xar-blue">git</span> clone https://github.com/razzaqinspires/bengkel-backend-api.git</p>
+                        
+                        <p class="mb-2"><span class="text-gray-500"># 2. Install Dependencies</span></p>
+                        <p class="mb-4"><span class="text-xar-green">npm</span> install</p>
+
+                         <p class="mb-2"><span class="text-gray-500"># 3. Run Server</span></p>
+                        <p><span class="text-xar-green">npm</span> run dev</p>
+                    </div>
                 </div>
             </div>
         </main>
     </div>
+
     <script src="js/main.js"></script>
 </body>
 </html>
