@@ -1,0 +1,187 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ==========================================
+// Enums (Pilihan Tetap untuk Stabilitas Data)
+// ==========================================
+
+enum Role {
+  USER
+  PARTNER // Pemilik Bengkel
+  ADMIN
+}
+
+enum BookingStatus {
+  PENDING           // Menunggu pembayaran awal
+  CONFIRMED         // Sudah dibayar, menunggu jadwal/kedatangan
+  IN_PROGRESS       // Sedang dikerjakan
+  WAITING_APPROVAL  // Ada biaya tambahan, menunggu persetujuan user
+  COMPLETED         // Selesai dikerjakan
+  CANCELLED         // Dibatalkan
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+// ==========================================
+// Models
+// ==========================================
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String
+  phone     String?  @unique
+  role      Role     @default(USER)
+  avatarUrl String?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  workshop  Workshop? // 1 User (Partner) hanya punya 1 Bengkel (MVP Rule)
+  bookings  Booking[]
+  reviews   Review[]
+
+  @@map("users") // Nama tabel di database lowercase
+}
+
+model Workshop {
+  id          Int      @id @default(autoincrement())
+  ownerId     Int      @unique
+  name        String
+  description String?  @db.Text
+  address     String
+  phoneNumber String?
+  
+  // Geospatial Data (Disimpan sebagai Float untuk kompatibilitas Raw Query)
+  latitude    Float
+  longitude   Float
+  
+  isOpen          Boolean @default(true)
+  isEmergencyReady Boolean @default(false) // Siap dipanggil mogok?
+  rating          Float   @default(0)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  owner       User          @relation(fields: [ownerId], references: [id])
+  services    ServiceItem[]
+  bookings    Booking[]
+  reviews     Review[]
+
+  @@index([latitude, longitude]) // Index untuk mempercepat pencarian lokasi
+  @@map("workshops")
+}
+
+model ServiceItem {
+  id           Int      @id @default(autoincrement())
+  workshopId   Int
+  name         String
+  description  String?
+  price        Decimal  @db.Decimal(10, 2) // Gunakan Decimal untuk uang!
+  isFixedPrice Boolean  @default(true)     // True: Harga Pas, False: Estimasi
+  
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  workshop     Workshop        @relation(fields: [workshopId], references: [id])
+  bookingItems BookingDetail[]
+
+  @@map("service_items")
+}
+
+model Booking {
+  id           Int           @id @default(autoincrement())
+  userId       Int
+  workshopId   Int
+  status       BookingStatus @default(PENDING)
+  
+  // Waktu Booking
+  scheduledDate DateTime
+  
+  // Keuangan
+  inspectionFee Decimal  @default(0) @db.Decimal(10, 2) // Biaya cek fisik (opsional)
+  totalPrice    Decimal  @default(0) @db.Decimal(10, 2) // Total tagihan
+  
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  // Relations
+  user         User            @relation(fields: [userId], references: [id])
+  workshop     Workshop        @relation(fields: [workshopId], references: [id])
+  bookingItems BookingDetail[]
+  payment      Payment?        // 1 Booking = 1 Payment Transaction Record
+  review       Review?
+
+  @@map("bookings")
+}
+
+model BookingDetail {
+  id          Int      @id @default(autoincrement())
+  bookingId   Int
+  serviceId   Int
+  
+  // Snapshot Data (PENTING: Harga disimpan saat transaksi terjadi)
+  // Jika besok harga service naik, data histori transaksi lama tidak berubah.
+  priceAtBooking Decimal @db.Decimal(10, 2) 
+  note           String?
+
+  // Relations
+  booking     Booking     @relation(fields: [bookingId], references: [id])
+  service     ServiceItem @relation(fields: [serviceId], references: [id])
+
+  @@map("booking_details")
+}
+
+model Payment {
+  id              Int           @id @default(autoincrement())
+  bookingId       Int           @unique
+  externalId      String?       // ID dari Payment Gateway (Midtrans Order ID)
+  amount          Decimal       @db.Decimal(10, 2)
+  status          PaymentStatus @default(PENDING)
+  paymentUrl      String?       // Link bayar Midtrans
+  paymentMethod   String?       // Gopay, BCA, dll
+  
+  paidAt          DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  // Relations
+  booking         Booking       @relation(fields: [bookingId], references: [id])
+
+  @@map("payments")
+}
+
+model Review {
+  id          Int      @id @default(autoincrement())
+  bookingId   Int      @unique
+  userId      Int
+  workshopId  Int
+  rating      Int      @default(5) // 1-5
+  comment     String?  @db.Text
+  
+  createdAt   DateTime @default(now())
+
+  // Relations
+  booking     Booking  @relation(fields: [bookingId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
+  workshop    Workshop @relation(fields: [workshopId], references: [id])
+
+  @@map("reviews")
+}
