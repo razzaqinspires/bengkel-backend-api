@@ -15,76 +15,129 @@
                         'xar-green': '#00ff88',
                         'xar-blue': '#00b8ff',
                         'xar-dark': '#0a0a0a'
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     }
                 }
             }
         }
     </script>
 </head>
-<body class="overflow-x-hidden">
+<body class="bg-xar-dark text-gray-300 antialiased overflow-x-hidden">
 
-    <div class="flex h-screen">
-        <aside class="w-64 glass-panel h-full hidden md:flex flex-col border-r border-white/5 z-50">
+    <header class="md:hidden fixed top-0 w-full z-40 glass-panel border-b border-white/5 flex justify-between items-center px-6 py-4">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded bg-gradient-to-br from-xar-green to-blue-600 flex items-center justify-center text-black font-bold text-xs">X</div>
+            <span class="font-bold text-white tracking-wider">MEXA</span>
+        </div>
+        <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none">
+            <i class="fa-solid fa-bars text-xl"></i>
+        </button>
+    </header>
+
+    <div id="mobile-overlay" class="fixed inset-0 bg-black/80 z-40 hidden opacity-0 transition-opacity duration-300 md:hidden backdrop-blur-sm"></div>
+
+    <div class="flex h-screen pt-16 md:pt-0"> <aside id="sidebar" class="fixed inset-y-0 left-0 w-72 glass-panel border-r border-white/5 z-50 transform -translate-x-full md:translate-x-0 md:relative sidebar-transition flex flex-col h-full">
+            
+            <div class="absolute top-4 right-4 md:hidden">
+                <button id="close-menu-btn" class="text-gray-400 hover:text-white">
+                    <i class="fa-solid fa-xmark text-2xl"></i>
+                </button>
+            </div>
+
             <div class="p-8 border-b border-white/5">
                 <h1 class="text-2xl font-bold tracking-tighter text-white">
                     XARVIONEX <br>
                     <span class="text-xar-green text-lg">MEXA</span>
                 </h1>
-                <p class="text-xs text-gray-500 mt-2">Layanan Bengkel & Transportasi</p>
+                <p class="text-xs text-gray-500 mt-2 tracking-widest uppercase">Intelligent Service Core</p>
             </div>
-            <nav class="flex-1 py-6 space-y-1">
-                <a href="index.html" class="nav-link active block px-6 py-3 text-sm text-gray-300 hover:text-white transition">Pengenalan</a>
-                <a href="auth.html" class="nav-link block px-6 py-3 text-sm text-gray-300 hover:text-white transition">Autentikasi</a>
-                <a href="api-reference.html" class="nav-link block px-6 py-3 text-sm text-gray-300 hover:text-white transition">API Reference</a>
-                <a href="support.html" class="nav-link block px-6 py-3 text-sm text-gray-300 hover:text-white transition">Dukungan & Bisnis</a>
+            
+            <nav class="flex-1 py-6 space-y-1 overflow-y-auto no-scrollbar">
+                <p class="px-6 text-xs font-bold text-gray-600 uppercase tracking-widest mb-3">Menu Utama</p>
+                <a href="index.html" class="nav-link active block px-6 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 transition border-l-2 border-transparent">
+                    <i class="fa-solid fa-house w-6"></i> Pengenalan
+                </a>
+                <a href="auth.html" class="nav-link block px-6 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 transition border-l-2 border-transparent">
+                    <i class="fa-solid fa-shield-halved w-6"></i> Autentikasi
+                </a>
+                <a href="api-reference.html" class="nav-link block px-6 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 transition border-l-2 border-transparent">
+                    <i class="fa-solid fa-code w-6"></i> API Reference
+                </a>
+                
+                <p class="px-6 text-xs font-bold text-gray-600 uppercase tracking-widest mt-8 mb-3">Ekosistem</p>
+                <a href="support.html" class="nav-link block px-6 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 transition border-l-2 border-transparent">
+                    <i class="fa-solid fa-headset w-6"></i> Dukungan & Bisnis
+                </a>
             </nav>
-            <div class="p-6 text-xs text-gray-600">
-                &copy; 2026 XARVIONEX Corp.
+            
+            <div class="p-6 border-t border-white/5">
+                <div class="flex items-center gap-3">
+                    <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                    <span class="text-xs text-gray-400">Status: <strong>Operational</strong></span>
+                </div>
             </div>
         </aside>
 
-        <main class="flex-1 overflow-y-auto relative">
-            <div class="fixed top-[-20%] right-[-10%] w-[600px] h-[600px] bg-xar-green rounded-full mix-blend-screen filter blur-[150px] opacity-10"></div>
+        <main class="flex-1 overflow-y-auto relative w-full bg-xar-dark">
+            <div class="fixed top-[-10%] right-[-20%] md:right-[-10%] w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-xar-green rounded-full mix-blend-screen filter blur-[100px] md:blur-[150px] opacity-10 pointer-events-none"></div>
+            <div class="fixed bottom-[-10%] left-[-20%] md:left-[-10%] w-[250px] md:w-[500px] h-[250px] md:h-[500px] bg-xar-blue rounded-full mix-blend-screen filter blur-[100px] md:blur-[150px] opacity-10 pointer-events-none animate-pulse-slow"></div>
 
-            <div class="max-w-4xl mx-auto px-8 py-20">
-                <div class="inline-flex items-center px-3 py-1 rounded-full border border-xar-green/30 bg-xar-green/10 text-xar-green text-xs font-mono mb-6">
-                    <span class="w-2 h-2 rounded-full bg-xar-green mr-2 animate-pulse"></span> PROJECT MEXA: LIVE
+            <div class="max-w-4xl mx-auto px-6 md:px-10 py-10 md:py-20">
+                
+                <div class="inline-flex items-center px-3 py-1 rounded-full border border-xar-green/30 bg-xar-green/10 text-xar-green text-xs font-mono mb-6 backdrop-blur-sm">
+                    <span class="w-2 h-2 rounded-full bg-xar-green mr-2 animate-pulse"></span> PROJECT MEXA: LIVE V1.0
                 </div>
                 
-                <h1 class="text-6xl font-bold text-white mb-6">
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
                     Revolusi Layanan <br>
-                    <span class="brand-gradient">Bengkel & Transportasi</span>
+                    <span class="bg-gradient-to-r from-xar-green to-xar-blue bg-clip-text text-transparent">Bengkel & Transportasi</span>
                 </h1>
                 
-                <p class="text-lg text-gray-400 leading-relaxed mb-10 border-l-4 border-xar-green pl-6">
-                    **MEXA (Mekanik + Xar)** adalah evolusi dari layanan bengkel konvensional, diintegrasikan ke dalam ekosistem **XARVIONEX**. 
-                    Kami menyediakan infrastruktur backend yang cerdas untuk menghubungkan pemilik kendaraan dengan mitra bengkel secara real-time, akurat, dan transparan.
-                </p>
+                <div class="glass-panel p-6 md:p-8 rounded-2xl border-l-4 border-xar-green mb-10 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-white/10 to-transparent rounded-bl-full opacity-50 transition-opacity group-hover:opacity-100"></div>
+                    <p class="text-base md:text-lg text-gray-300 leading-relaxed relative z-10">
+                        <span class="text-white font-bold text-xl">MEXA (Mekanik + Xar)</span> adalah evolusi mutakhir dari layanan bengkel konvensional yang diintegrasikan secara mendalam ke dalam ekosistem <span class="text-xar-green font-bold tracking-wide">XARVIONEX</span>. 
+                        <br><br>
+                        Kami menyediakan infrastruktur backend cerdas yang menghubungkan pemilik kendaraan dengan mitra bengkel secara <span class="text-white font-semibold">real-time</span>, <span class="text-white font-semibold">akurat</span>, dan <span class="text-white font-semibold">transparan</span>.
+                    </p>
+                </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
-                    <div class="glass-panel p-6 rounded-xl border-t-2 border-xar-green">
-                        <i class="fa-solid fa-server text-3xl text-xar-green mb-4"></i>
+                    <div class="glass-panel p-6 rounded-xl border-t-2 border-xar-green hover:bg-white/5 transition duration-300">
+                        <div class="w-12 h-12 rounded-lg bg-xar-green/20 flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-microchip text-2xl text-xar-green"></i>
+                        </div>
                         <h3 class="text-xl font-bold text-white mb-2">High-Performance Core</h3>
-                        <p class="text-sm text-gray-400">Dibangun dengan Node.js & PostgreSQL 17, MEXA menangani ribuan transaksi per detik dengan latensi minimal.</p>
+                        <p class="text-sm text-gray-400 leading-relaxed">Dibangun dengan Node.js & PostgreSQL 17, MEXA menangani ribuan transaksi per detik dengan latensi minimal.</p>
                     </div>
-                    <div class="glass-panel p-6 rounded-xl border-t-2 border-xar-blue">
-                        <i class="fa-solid fa-map-location-dot text-3xl text-xar-blue mb-4"></i>
+                    
+                    <div class="glass-panel p-6 rounded-xl border-t-2 border-xar-blue hover:bg-white/5 transition duration-300">
+                        <div class="w-12 h-12 rounded-lg bg-xar-blue/20 flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-satellite-dish text-2xl text-xar-blue"></i>
+                        </div>
                         <h3 class="text-xl font-bold text-white mb-2">Geospatial Intelligence</h3>
-                        <p class="text-sm text-gray-400">Algoritma pencarian berbasis radius (Haversine) memastikan pengguna menemukan bengkel terdekat dalam hitungan milidetik.</p>
+                        <p class="text-sm text-gray-400 leading-relaxed">Algoritma pencarian berbasis radius (Haversine) memastikan pengguna menemukan bengkel terdekat dalam hitungan milidetik.</p>
                     </div>
                 </div>
 
-                <div class="mt-16">
-                    <a href="auth.html" class="inline-flex items-center px-8 py-3 bg-xar-green text-black font-bold rounded hover:bg-white transition">
+                <div class="mt-16 flex flex-col md:flex-row gap-4">
+                    <a href="auth.html" class="w-full md:w-auto text-center px-8 py-4 bg-xar-green text-black font-bold rounded-lg hover:bg-white hover:scale-105 transition transform shadow-[0_0_20px_rgba(0,255,136,0.3)]">
                         Mulai Integrasi <i class="fa-solid fa-arrow-right ml-2"></i>
                     </a>
-                    <a href="support.html" class="ml-4 inline-flex items-center px-8 py-3 border border-white/20 text-white font-bold rounded hover:bg-white/10 transition">
-                        Hubungi Tim XARVIONEX
+                    <a href="support.html" class="w-full md:w-auto text-center px-8 py-4 border border-white/20 text-white font-bold rounded-lg hover:bg-white/10 hover:border-white/50 transition">
+                        Hubungi XARVIONEX
                     </a>
                 </div>
+                
+                <footer class="mt-20 pt-10 border-t border-white/5 text-center text-gray-600 text-sm pb-10">
+                    <p>&copy; 2026 XARVIONEX Corp. <br> All Rights Reserved.</p>
+                </footer>
             </div>
         </main>
     </div>
+    
     <script src="js/main.js"></script>
 </body>
 </html>
